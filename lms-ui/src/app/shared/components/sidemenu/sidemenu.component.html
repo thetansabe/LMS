@@ -1,0 +1,50 @@
+<nav class="sidemenu" *ngIf="chapters">
+  <div class="sidemenu-head">
+    <h1>Nội dung bài học</h1>
+    <div class="sidemenu-expand">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+      <p>Mở rộng</p>
+    </div>
+  </div>
+
+  <ul class="sidemenu-nav" *ngFor="let chapter of chapters; let i = index">
+    <li class="sidemenu-item">
+      <!-- <div class="sidemenu-seleted"></div> -->
+      <div class="sidemenu-link" (click)="toggleChapter(i)">
+        <span class="sidemenu-title">{{ i }}. {{ chapter.title }}</span>
+        <div [ngSwitch]="chapter.isOpen">
+            <ion-icon name="chevron-up-outline" *ngSwitchCase="true"></ion-icon>
+            <ion-icon name="chevron-down-sharp" *ngSwitchDefault></ion-icon>
+        </div>
+      </div>
+
+      <div *ngIf="chapter.isOpen">
+        <ul class="sub-menu" *ngFor="let lesson of chapter.lessons">
+            <a class="sub-item" routerLink="{{ lesson.link }}" routerLinkActive="activating-lesson">
+              <div [ngSwitch]="lesson.isCompleted">
+                <ion-icon
+                  name="chevron-down-circle-sharp"
+                  style="color: green"
+                  *ngSwitchCase="true"
+                ></ion-icon>
+    
+                <ion-icon
+                  *ngSwitchDefault
+                  name="radio-button-off-outline"
+                ></ion-icon>
+              </div>
+    
+              <p>{{ lesson.title }}</p>
+            </a>
+          </ul>
+      </div>
+    </li>
+  </ul>
+</nav>
+
+<!-- 
+    1. Create mock data for sidemenu
+    2. Use directive to render sidemenu
+    3. Use directive to control open/close of submenus
+    4. Use directive to control expansion of sidemenu
+ -->

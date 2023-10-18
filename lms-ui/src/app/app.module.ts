@@ -11,10 +11,12 @@ import { HomepageComponent } from './modules/home/homepage.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CompletedVideoIconPipe } from './shared/pipe/completed-video-icon.pipe';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CompletedVideoIconPipe
   ],
   imports: [
     FooterComponent,
