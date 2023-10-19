@@ -9,19 +9,20 @@ const routes: Routes = [
         (m) => m.HomepageComponent
       ),
   },
+
   {
     path: 'courses',
     loadComponent: () =>
-      import('./modules/course/course.component').then(
-        (m) => m.CourseComponent
-      ),
+          import('./modules/courses/main-view/course-main-view.component').then(
+            (m) => m.CourseMainViewComponent
+          ),
 
     children: [
       {
         path: ':chapterId/:videoId',
         loadComponent: () =>
-          import('./modules/course/view/course-view.component').then(
-            (m) => m.CourseViewComponent
+          import('./modules/courses/lesson-detail/course-lesson-detail.component').then(
+            (m) => m.CourseLessonDetailComponent
           ),
       },
     ],

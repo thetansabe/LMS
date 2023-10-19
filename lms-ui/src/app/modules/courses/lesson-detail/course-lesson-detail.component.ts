@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-course-view',
+  selector: 'app-course-lesson-detail',
   standalone: true,
-  imports: [CommonModule],
-  templateUrl: './course-view.component.html',
-  styleUrls: ['./course-view.component.scss']
+  imports: [CommonModule, RouterModule],
+  templateUrl: './course-lesson-detail.component.html',
+  styleUrls: ['./course-lesson-detail.component.scss']
 })
-export class CourseViewComponent {
+export class CourseLessonDetailComponent {
   courseId : any = null!;
 
   constructor(private route: Router, private activatedRoute : ActivatedRoute) {}
@@ -19,5 +19,4 @@ export class CourseViewComponent {
       this.courseId = params;
     });
   }
-
 }

@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CompletedVideoIconPipe } from './shared/pipe/completed-video-icon.pipe';
+import { CourseMainViewComponent } from '@modules/courses/main-view/course-main-view.component';
 
 @NgModule({
   declarations: [
@@ -19,16 +20,17 @@ import { CompletedVideoIconPipe } from './shared/pipe/completed-video-icon.pipe'
     CompletedVideoIconPipe
   ],
   imports: [
-    FooterComponent,
-    NavComponent,
-    HomepageComponent,
     BrowserModule,
     AppRoutingModule,
-    IonicModule.forRoot(),
-    StoreModule.forRoot({}, {}),
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HomepageComponent,
+    IonicModule.forRoot(),
+    StoreModule.forRoot({}, {}),
+    FooterComponent,
+    NavComponent,
+    CourseMainViewComponent
   ],
   bootstrap: [AppComponent]
 })

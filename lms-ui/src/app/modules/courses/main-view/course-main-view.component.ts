@@ -4,18 +4,19 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { SidemenuComponent } from '@shared/components/sidemenu/sidemenu.component';
 
 @Component({
-  selector: 'app-course',
+  selector: 'app-course-main-view',
   standalone: true,
   imports: [CommonModule, RouterModule, SidemenuComponent],
-  templateUrl: './course.component.html',
-  styleUrls: ['./course.component.scss']
+  templateUrl: './course-main-view.component.html',
+  styleUrls: ['./course-main-view.component.scss']
 })
-export class CourseComponent {
-  courseId: string = null!;
-  constructor(private activatedRoute: ActivatedRoute) {
+export class CourseMainViewComponent {
+
+  constructor(private activatedRoute: ActivatedRoute) {}
+
+  ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
-      this.courseId = params['id'];
-      console.log("Course ID ~ 18: ", this.courseId);
+      console.log("Course ID ~ 18: ", params['id']);
     });
   }
 }
