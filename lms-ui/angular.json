@@ -36,7 +36,7 @@
             ],
             "styles": [
               {
-                "input": "node_modules/@videogular/ngx-videogular/fonts/videogular.css"
+                "input": "node_modules/plyr/src/sass/plyr.scss"
               },
               "src/styles.scss",
               {

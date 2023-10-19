@@ -1,11 +1,8 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { VgApiService, VgCoreModule } from '@videogular/ngx-videogular/core';
-import { VgControlsModule } from '@videogular/ngx-videogular/controls';
-import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
-import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
 import { RouterModule } from '@angular/router';
 import Hls from 'hls.js';
+import Plyr from 'plyr';
 
 @Component({
   selector: 'app-video-player',
@@ -13,21 +10,18 @@ import Hls from 'hls.js';
   imports: [
     CommonModule,
     RouterModule,
-    VgCoreModule,
-    VgControlsModule,
-    VgOverlayPlayModule,
-    VgBufferingModule,
   ],
   templateUrl: './video-player.component.html',
   styleUrls: ['./video-player.component.scss'],
 })
 export class VideoPlayerComponent {
-
   //run a HLS video only
   hls: Hls = null!;
   src: string = 'http://localhost:4200/assets/videos/hls1/trungnguyen.m3u8';
 
-  @ViewChild('media') media !: ElementRef;
+  @ViewChild('hlsPlayer') hlsPlayer!: ElementRef;
+
+  defaultOptions: any = {};
 
   ngAfterViewInit() {
     if(this.hls){
@@ -37,15 +31,35 @@ export class VideoPlayerComponent {
     if(Hls.isSupported()){
       this.hls = new Hls();
 
-      this.hls.attachMedia(this.media.nativeElement);
-
       this.hls.on(Hls.Events.MEDIA_ATTACHED, () => {
         console.log('video and hls.js are now bound together !');
         this.hls.loadSource(this.src);
         this.hls.on(Hls.Events.MANIFEST_PARSED, (event, data) => {
           console.log('manifest loaded, found ' + data.levels.length + ' quality level');
+
+          this.defaultOptions.controls = [
+            'play-large',
+            'restart',
+            'rewind',
+            'play',
+            'fast-forward',
+            'progress',
+            'current-time',
+            'duration',
+            'mute',
+            'volume',
+            'captions',
+            'settings',
+            'pip',
+            // 'download',
+            'fullscreen',
+          ];
+
+          new Plyr(this.hlsPlayer.nativeElement, this.defaultOptions);
         });
       });
+
+      this.hls.attachMedia(this.hlsPlayer.nativeElement);
 
       this.hls.on(Hls.Events.ERROR, (event, data) => {
         console.log(data);
@@ -68,21 +82,7 @@ export class VideoPlayerComponent {
         }
       });
     }else{
-      console.log('hls is not supported');
+      console.log('hls is not supported, try another web browser');
     }
-  }
-
-  //ngxvideogular helpers
-  api: VgApiService = new VgApiService();
-
-  onPlayerReady(source: VgApiService) {
-    this.api = source;
-    this.api
-      .getDefaultMedia()
-      .subscriptions.loadedMetadata.subscribe(this.autoplay.bind(this));
-  }
-
-  autoplay() {
-    this.api.play();
   }
 }
