@@ -35,6 +35,9 @@
               }
             ],
             "styles": [
+              {
+                "input": "node_modules/@videogular/ngx-videogular/fonts/videogular.css"
+              },
               "src/styles.scss",
               {
                 "input": "node_modules/@ionic/angular/css/core.css"

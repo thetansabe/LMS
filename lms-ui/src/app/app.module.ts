@@ -13,11 +13,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CompletedVideoIconPipe } from './shared/pipe/completed-video-icon.pipe';
 import { CourseMainViewComponent } from '@modules/courses/main-view/course-main-view.component';
+import { VideoPlayerComponent } from '@shared/components/video-player/video-player.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CompletedVideoIconPipe
+    CompletedVideoIconPipe,
   ],
   imports: [
     BrowserModule,
@@ -30,7 +31,8 @@ import { CourseMainViewComponent } from '@modules/courses/main-view/course-main-
     StoreModule.forRoot({}, {}),
     FooterComponent,
     NavComponent,
-    CourseMainViewComponent
+    CourseMainViewComponent,
+    VideoPlayerComponent
   ],
   bootstrap: [AppComponent]
 })

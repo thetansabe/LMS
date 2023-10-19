@@ -1,0 +1,36 @@
+<h1>
+    HELLO from video player
+</h1>
+<div style="height: 100%">
+    <h2>VIDEO PLAYER YT ANGULAR</h2>
+
+    <vg-player (onPlayerReady)="onPlayerReady($event)">
+         <vg-overlay-play></vg-overlay-play>
+        <vg-buffering vgFor="singleVideo"></vg-buffering>
+        <vg-scrub-bar>
+            <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+            <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
+        </vg-scrub-bar> 
+        <vg-controls>
+            <vg-play-pause></vg-play-pause>
+            <vg-playback-button></vg-playback-button>
+            <vg-time-display vgProperty="current" vgFormat="mm:ss"></vg-time-display>
+            <vg-scrub-bar style="pointer-events: none;"></vg-scrub-bar>
+            <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
+            <vg-track-selector></vg-track-selector>
+            <vg-mute></vg-mute>
+            <vg-volume></vg-volume>
+            <vg-fullscreen></vg-fullscreen>
+        </vg-controls>
+        <video  style="margin: 0 auto;"
+                [vgMedia]="$any(media)" 
+                #media id="singleVideo" 
+                preload="auto"
+                crossorigin
+        >
+            <!-- <source src="../../../../assets/videos/VID_20231019_110701.mp4" type="video/mp4"> -->
+            <track src="../../../../assets/subs/sample-en.vtt" kind="subtitles" srclang="en" label="English">
+            <track src="../../../../assets/subs/sample-vn.vtt" kind="subtitles" srclang="vi" label="Vietnamese">
+        </video>
+    </vg-player>
+</div>
