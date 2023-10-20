@@ -27,6 +27,14 @@ const routes: Routes = [
       },
     ],
   },
+
+  {
+    path: 'enrollments',
+    loadComponent: () =>
+      import('./modules/enrollments/form/enrollment-form.component').then(
+        (m) => m.EnrollmentFormComponent
+      ),
+  }
 ];
 
 @NgModule({
