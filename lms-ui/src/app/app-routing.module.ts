@@ -34,6 +34,14 @@ const routes: Routes = [
       import('./modules/enrollments/form/enrollment-form.component').then(
         (m) => m.EnrollmentFormComponent
       ),
+  },
+
+  {
+    path: 'register',
+    loadComponent: () =>
+      import('./modules/auths/register/register.component').then(
+        (m) => m.RegisterComponent
+      ),
   }
 ];
 

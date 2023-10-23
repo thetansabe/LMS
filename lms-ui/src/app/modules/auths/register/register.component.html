@@ -1,0 +1,29 @@
+<p>register works!</p>
+<p>register works!</p>
+<p>register works!</p>
+<p>register works!</p>
+
+<p> {{ registerForm.value | json }}</p>
+
+<div class="container">
+    <form [formGroup] = "registerForm" (ngSubmit)="formSubmit$.next(null)">
+        <label for="username">Username</label>
+        <input type="text" id="username" formControlName="username" required>
+        <p *ngIf="username?.invalid && username?.touched" style="color: red;"> Wrong email format </p>
+        <pre>{{ username?.errors | json }}</pre>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" formControlName="password" required>
+        <p *ngIf="password?.invalid && password?.touched" style="color: red;"> Weak password </p>
+        <pre>{{ password?.errors | json }}</pre>
+
+        <label for="repeat-password">Repeat password</label>
+        <input type="password" id="repeat-password" formControlName="repassword" required>
+        <!-- <p *ngIf="1 && repassword?.touched" style="color: red;"> Not match </p> -->
+        <pre>{{ repassword?.errors | json }}</pre>
+        
+        <pre>{{ registerForm.errors | json }}</pre>
+
+        <button type="submit">Enroll</button>
+    </form>
+</div>

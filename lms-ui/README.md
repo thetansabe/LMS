@@ -22,6 +22,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ### Cautions:
 - Simple implementation: src > modules > enrollments > form
 (watch for multiple checkboxes selection)
+- Custom validators: src > modules > auths > register
+(sync and async custom validators)
 
 ## Development server
 

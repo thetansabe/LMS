@@ -33,7 +33,7 @@ export class EnrollmentFormComponent {
         ],
       ],
       gender: '',
-      interests: this.fb.array(this.interests),
+      interests: this.fb.array(Array(this.interests.length).fill(false)),
       course: '',
     });
 
