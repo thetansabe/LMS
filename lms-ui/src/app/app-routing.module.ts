@@ -42,6 +42,14 @@ const routes: Routes = [
       import('./modules/auths/register/register.component').then(
         (m) => m.RegisterComponent
       ),
+  },
+
+  {
+    path: 'cart',
+    loadComponent: () =>
+          import('./modules/carts/cart.component').then(
+            (m) => m.CartComponent
+          ),
   }
 ];
 

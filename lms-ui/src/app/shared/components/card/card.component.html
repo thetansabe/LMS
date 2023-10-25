@@ -1,0 +1,56 @@
+<div class="course-card" *ngIf="item">
+  <figure class="card-banner img-holder" style="--width: 370; --height: 220">
+    <img
+      [src]="item.imgSrc"
+      width="370"
+      height="220"
+      loading="lazy"
+      alt="item.titleLink"
+      class="img-cover"
+    />
+  </figure>
+
+  <div class="abs-badge">
+    <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
+
+    <span class="span">{{ item.timeOutline }}</span>
+  </div>
+
+  <div class="card-content">
+    <span class="badge">{{ item.badge }}</span>
+
+    <h3 class="h3">
+      <a [routerLink] ="item.linkTo" class="card-title"
+        >{{ item.titleLink }}</a
+      >
+    </h3>
+
+    <div class="wrapper">
+      <div class="rating-wrapper">
+        <ion-icon name="star"></ion-icon>
+        <ion-icon name="star"></ion-icon>
+        <ion-icon name="star"></ion-icon>
+        <ion-icon name="star"></ion-icon>
+        <ion-icon name="star"></ion-icon>
+      </div>
+
+      <p class="rating-text">({{ item.rating }}/{{ item.totalRates }} Rating)</p>
+    </div>
+
+    <data class="price" [value]="item.price">{{ item.price | currency:"USD" }}</data>
+
+    <ul class="card-meta-list">
+      <li class="card-meta-item">
+        <ion-icon name="library-outline" aria-hidden="true"></ion-icon>
+
+        <span class="span">{{ item.lessonNumber }} Lessons</span>
+      </li>
+
+      <li class="card-meta-item">
+        <ion-icon name="people-outline" aria-hidden="true"></ion-icon>
+
+        <span class="span">{{ item.studentNumber }} Students</span>
+      </li>
+    </ul>
+  </div>
+</div>

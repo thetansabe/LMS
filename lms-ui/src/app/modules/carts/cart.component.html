@@ -1,0 +1,52 @@
+<p>cart works!</p>
+<p>cart works!</p>
+<p>cart works!</p>
+
+<div *ngIf="(cartItems$ | async) as cartItems">
+  <div class="table">
+    <div class="table-header">
+      <div class="header__item">
+        <input type="checkbox" (click)="selectAll()" [(ngModel)]="isSelectAll"/>
+      </div>
+      <div class="header__item"></div>
+      <div class="header__item">Course</div>
+      <div class="header__item">Price</div>
+      <div class="header__item">Discount</div>
+      <div class="header__item">Total</div>
+      <div class="header__item">Action</div>
+    </div>
+    <div class="table-content">
+      <div
+        class="table-row"
+        *ngFor="let item of cartItems;"
+        [id] = "item.id"
+      >
+        <div class="table-data">
+          <input type="checkbox" (click)="addItem(item.id)" [checked]="isSelectAll"/>
+        </div>
+        <div class="table-data">
+          <img [src]="item.imgSrc" [alt]="item.titleLink" />
+        </div>
+        <div class="table-data">
+          <h3>{{ item.titleLink }}</h3>
+        </div>
+        <div class="table-data">
+          {{ item.price | currency : "USD" }}
+        </div>
+        <div class="table-data">-10%</div>
+        <div class="table-data">
+          {{ item.price | currency : "USD" }}
+        </div>
+        <div class="table-data">
+          <button (click)="deleteItem(item.id)">
+            <ion-icon name="trash-outline"></ion-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2>
+    Selected items: {{ selectedItems$ | async | json }}
+  </h2>
+</div>
