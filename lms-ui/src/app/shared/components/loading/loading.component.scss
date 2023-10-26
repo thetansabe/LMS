@@ -1,0 +1,18 @@
+/* LOADING */
+.loading{
+    margin: 0 auto;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 4px solid #29B986;
+    background-color: none;
+    border-top: 4px solid transparent;
+  
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    100% {
+      transform: rotate(360deg);
+    }
+  }

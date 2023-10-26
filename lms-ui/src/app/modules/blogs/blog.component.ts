@@ -1,37 +1,53 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PokeService } from '@shared/services/poke.service';
-import { InfiniteScrollCustomEvent, IonicModule } from '@ionic/angular';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
+import { PaginatedPokemon, Pokemon } from '@shared/model/poke.model';
+import { LoadingComponent } from '@shared/components/loading/loading.component';
 
 @Component({
   selector: 'app-blog',
   standalone: true,
-  imports: [CommonModule, IonicModule],
+  imports: [CommonModule, InfiniteScrollModule, LoadingComponent],
   templateUrl: './blog.component.html',
   styleUrls: ['./blog.component.scss'],
   providers: [ PokeService ],
 })
 
 export class BlogComponent {
+  
+  pokemons$: BehaviorSubject<Pokemon[]> = new BehaviorSubject<Pokemon[]>([]);;
+  limit: number = 20;
+  offset: number = 0;
+  isFinished: boolean = false;
+
+  subscriptionNotifier: Subject<void> = new Subject<void>();
+
   constructor(private pokeService: PokeService) {}
 
-  items: any[] = [];
-
-  ngOnInit() {
-    this.generateItems();
+  ngOnInit(): void {
+    this.getNewBatch(this.limit, this.offset);
   }
 
-  private generateItems() {
-    const count = this.items.length + 1;
-    for (let i = 0; i < 50; i++) {
-      this.items.push(`Item ${count + i}`);
-    }
+  onScroll(){
+    console.log('scrolled');
+    this.offset += this.limit;
+    this.getNewBatch(this.limit, this.offset);
   }
 
-  onIonInfinite(ev: any) {
-    this.generateItems();
-    setTimeout(() => {
-      (ev as InfiniteScrollCustomEvent).target.complete();
-    }, 500);
+  getNewBatch(limit: number, offset: number){
+    this.pokeService
+      .getPokemons(limit, offset)
+      .pipe(takeUntil(this.subscriptionNotifier))
+      .subscribe((pokemons: PaginatedPokemon) => {
+        this.pokemons$.next([...this.pokemons$.getValue(), ...pokemons.results]);
+      });
   }
+
+  ngOnDestroy(): void {
+    this.subscriptionNotifier.next();
+    this.subscriptionNotifier.complete();
+  }
+
 }

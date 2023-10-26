@@ -27,6 +27,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Small tricky stuffs:
 - select all checkboxes: src > app > modules > carts > cart.component
+- infinite scroll - ngx-infinite-scroll: src > app > modules > blogs > blog.component
 
 ## Development server
 

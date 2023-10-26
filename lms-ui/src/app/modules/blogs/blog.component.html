@@ -1,60 +1,42 @@
-<p>Blogs works</p>
-<p>Blogs works</p>
-<p>Blogs works</p>
+<div class="limit">
+  <p>Blogs works</p>
+  <p>Blogs works</p>
+  <p>Blogs works</p>
 
-<section>
-  <div class="main">
-    <ion-content>
-      <ion-list>
-        <ion-item *ngFor="let item of items; let index">
-          <div class="left">
-            <h1>{{ item }}</h1>
-            <p>
-              I’ve seen this over and over for the last 30 years, people let the
-              database set the ID or Primary Key of a table from the database
-            </p>
-          </div>
-
-          <div class="right">
-            <img [src]="'https://picsum.photos/80/80?random=' + index" alt="" />
-          </div>
-        </ion-item>
-      </ion-list>
-      <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
-        <ion-infinite-scroll-content></ion-infinite-scroll-content>
-      </ion-infinite-scroll>
-    </ion-content>
-    <!-- <div class="post">
-            <div class="left">
-                <h1>Stop using Integer ID’s in your Database</h1>
-                <p>I’ve seen this over and over for the last 30 years, people let the database set the ID or Primary Key of a table from the database</p>
-            </div>
-
-            <div class="right">
-                <img src="http://localhost:4200/assets/images/blog-1.jpg" alt="">
-            </div>
+  <section>
+    <div class="main">
+      <div class="post" *ngFor="let poke of pokemons$ | async; let index">
+        <div class="left">
+          <h1>{{ poke.name }}</h1>
+          <p>
+            {{ poke.url }}
+          </p>
         </div>
 
-        <div class="post">
-            <div class="left">
-                <h1>Stop using Integer ID’s in your Database</h1>
-                <p>I’ve seen this over and over for the last 30 years, people let the database set the ID or Primary Key of a table from the database</p>
-            </div>
+        <div class="right">
+        <img [src]="'https://picsum.photos/80/80?random=' + index" alt="avatar" />
+      </div>
+      </div>
 
-            <div class="right">
-                <img src="http://localhost:4200/assets/images/blog-1.jpg" alt="">
-            </div>
-        </div> -->
-  </div>
+      <div
+        infiniteScroll
+        [infiniteScrollDistance]="1"
+        [infiniteScrollThrottle]="500"
+        (scrolled)="onScroll()"
+      ></div>
 
-  <div class="hightlight">
-    <div class="box">
-      <h2>Recommended topics</h2>
-      <div class="box-content">
-        <button>Rust</button>
-        <button>Cloud Computing</button>
-        <button>Sre</button>
+      <app-loading *ngIf="!isFinished"></app-loading>
+    </div>
+
+    <div class="hightlight">
+      <div class="box">
+        <h2>Recommended topics</h2>
+        <div class="box-content">
+          <button>Rust</button>
+          <button>Cloud Computing</button>
+          <button>Sre</button>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>

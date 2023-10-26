@@ -21,6 +21,7 @@
     "@ionic/angular": "^7.4.3",
     "@ngrx/store": "^16.3.0",
     "hls.js": "^1.4.12",
+    "ngx-infinite-scroll": "^16.0.0",
     "plyr": "^3.7.8",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
