@@ -2,11 +2,16 @@
 <p>cart works!</p>
 <p>cart works!</p>
 
-<div *ngIf="(cartItems$ | async) as cartItems">
+<div *ngIf="cartItems">
   <div class="table">
     <div class="table-header">
       <div class="header__item">
-        <input type="checkbox" (click)="selectAll()" [(ngModel)]="isSelectAll"/>
+        <input
+          type="checkbox"
+          (click)="selectAll()"
+          [indeterminate]="isIndet"
+          [checked]="isSelectAll"
+        />
       </div>
       <div class="header__item"></div>
       <div class="header__item">Course</div>
@@ -16,13 +21,13 @@
       <div class="header__item">Action</div>
     </div>
     <div class="table-content">
-      <div
-        class="table-row"
-        *ngFor="let item of cartItems;"
-        [id] = "item.id"
-      >
+      <div class="table-row" *ngFor="let item of cartItems" [id]="item.id">
         <div class="table-data">
-          <input type="checkbox" (click)="addItem(item.id)" [checked]="isSelectAll"/>
+          <input
+            type="checkbox"
+            [checked]="isSelected(item.id)"
+            (click)="addItem(item.id)"
+          />
         </div>
         <div class="table-data">
           <img [src]="item.imgSrc" [alt]="item.titleLink" />
@@ -46,7 +51,5 @@
     </div>
   </div>
 
-  <h2>
-    Selected items: {{ selectedItems$ | async | json }}
-  </h2>
+  <button (click)="checkOut()">Check out cart</button>
 </div>

@@ -25,6 +25,9 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - Custom validators: src > modules > auths > register
 (sync and async custom validators)
 
+## Small tricky stuffs:
+- select all checkboxes: src > app > modules > carts > cart.component
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.

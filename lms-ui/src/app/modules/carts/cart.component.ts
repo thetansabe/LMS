@@ -4,34 +4,10 @@ import { IonicModule } from '@ionic/angular';
 import { CourseCard, MOCK_COURSE_CARDS } from '@shared/model/card.model';
 import {
   Observable,
-  Subject,
-  filter,
-  from,
-  map,
   of,
-  scan,
-  share,
-  startWith,
-  switchMap,
-  tap,
 } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 
-const registeredCourses = (
-  selected: Set<string>,
-  courseId: string,
-  isSelectAll: boolean
-) => {
-  //use Set to make sure no duplicated courseId
-  //if in selectAll mode, do not remove any courseId, else remove existed courseId
-  if (selected.has(courseId) && !isSelectAll) {
-    selected.delete(courseId);
-  } else {
-    selected.add(courseId);
-  }
-
-  return selected;
-};
 
 @Component({
   selector: 'app-cart',
@@ -42,78 +18,73 @@ const registeredCourses = (
 })
 export class CartComponent {
   cartItems$: Observable<CourseCard[]> = null!;
-  selectItem$ = new Subject<string>();
+  cartItems: CourseCard[] = [];
+  
+  selectedItems: Set<string> = new Set<string>();
 
-  selectedItems$ = this.selectItem$.pipe(
-    scan(
-      (acc: Set<string>, currVal: string) =>
-        registeredCourses(acc, currVal, this.isSelectAll),
-      new Set<string>()
-    ), //each time selectItem$ emits, perform reduce() on the value emitted
-    startWith(new Set<string>()), //avoid empty data stream
-    map((selected) => Array.from(selected)), //convert Set to Array,
-    share()
-  );
+  isSelected(item: string): boolean {
+    return this.selectedItems.has(item);
+  }
 
   ngOnInit() {
+    //in real world, this is a http request
+    //return observable, so we have to work with it
     this.cartItems$ = of(MOCK_COURSE_CARDS);
+    this.cartItems$.subscribe((items) => {
+      this.cartItems = items;
+    });
   }
 
-  trackById(index: string, item: CourseCard) {
-    return item.id;
-  }
-
-  deleteItem(id: string) {
-    //UI deletion
-    this.cartItems$ = this.cartItems$.pipe(
-      map((items) => items.filter((item) => item.id !== id))
-      // another way:
-      // switchMap((items) => from(items)),
-      // filter((item) => item.id !== id),
-      // reduce((acc, item) => [...acc, item], [] as CourseCard[])
+  get isIndet() {
+    return (
+      this.selectedItems.size > 0 &&
+      this.selectedItems.size !== this.cartItems.length
     );
-
-    //selected items deletion
-    this.selectedItems$
-      .pipe(
-        switchMap((ids) => from(ids)),
-        filter((_id) => _id === id)
-      )
-      .subscribe((id) => {
-        this.isSelectAll = false;
-        this.selectItem$.next(id);
-      });
-
-    this.selectItem$.next(id);
   }
 
   addItem(id: string) {
-    if (this.isSelectAll) {
-      this.isSelectAll = false;
-      this.cartItems$
-        .pipe(
-          switchMap((items) => from(items)),
-          filter((item) => item.id !== id),
-          map((item) => item.id)
-        )
-        .subscribe((id) => {
-          this.selectItem$.next(id);
-        });
+    // handle selectedItems logic
+    if (this.selectedItems.has(id)) {
+      this.selectedItems.delete(id);
+    } else {
+      this.selectedItems.add(id);
     }
 
-    this.selectItem$.next(id);
+    // handle UI isSelectAll logic
+    if(this.selectedItems.size === 0 && this.isSelectAll)
+      this.isSelectAll = false;
+
+    if(this.selectedItems.size === this.cartItems.length)
+      this.isSelectAll = true;
   }
 
   isSelectAll: boolean = false;
 
   selectAll() {
     this.isSelectAll = !this.isSelectAll;
+    
+    if (!this.isSelectAll) {
+      this.selectedItems.clear();
+      return;
+    }
 
-    this.cartItems$
-      .pipe(
-        switchMap((items) => from(items)),
-        map((item) => item.id)
-      )
-      .subscribe((id) => this.selectItem$.next(id));
+    this.cartItems.forEach((item) => {
+      this.selectedItems.add(item.id);
+    });
+  }
+
+  deleteItem(id: string) {
+    // handle selectedItems logic
+    if (this.selectedItems.has(id)) {
+      this.selectedItems.delete(id);
+    }
+
+    // handle UI cart display logic
+    this.cartItems = this.cartItems.filter((item) => item.id !== id);
+  }
+
+  checkOut() {
+    console.log('checkOut: ', this.selectedItems);
+    //use selectedItems to do further tasks
   }
 }
