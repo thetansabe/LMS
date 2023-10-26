@@ -19,6 +19,7 @@ import { VideoPlayerComponent } from '@shared/components/video-player/video-play
   declarations: [
     AppComponent,
     CompletedVideoIconPipe,
+    
   ],
   imports: [
     BrowserModule,

@@ -45,10 +45,18 @@ const routes: Routes = [
   },
 
   {
-    path: 'cart',
+    path: 'carts',
     loadComponent: () =>
           import('./modules/carts/cart.component').then(
             (m) => m.CartComponent
+          ),
+  },
+
+  {
+    path: 'blogs',
+    loadComponent: () =>
+          import('./modules/blogs/blog.component').then(
+            (m) => m.BlogComponent
           ),
   }
 ];
