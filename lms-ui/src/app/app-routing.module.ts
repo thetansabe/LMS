@@ -58,6 +58,14 @@ const routes: Routes = [
           import('./modules/blogs/blog.component').then(
             (m) => m.BlogComponent
           ),
+  },
+
+  {
+    path: 'schedulers',
+    loadComponent: () =>
+          import('./modules/schedulers/scheduler.component').then(
+            (m) => m.SchedulerComponent
+          ),
   }
 ];
 

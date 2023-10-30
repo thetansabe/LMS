@@ -14,6 +14,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CompletedVideoIconPipe } from './shared/pipe/completed-video-icon.pipe';
 import { CourseMainViewComponent } from '@modules/courses/main-view/course-main-view.component';
 import { VideoPlayerComponent } from '@shared/components/video-player/video-player.component';
+import { todoReducer } from '@modules/schedulers/state/todo.reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { TodoEffects } from '@modules/schedulers/state/todo.effects';
+import { environment } from '@enviroments/environment.development';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
@@ -29,11 +34,13 @@ import { VideoPlayerComponent } from '@shared/components/video-player/video-play
     BrowserAnimationsModule,
     HomepageComponent,
     IonicModule.forRoot(),
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot({ todos: todoReducer }),
     FooterComponent,
     NavComponent,
     CourseMainViewComponent,
-    VideoPlayerComponent
+    VideoPlayerComponent,
+    EffectsModule.forRoot([TodoEffects]),
+    environment.production ? [] : StoreDevtoolsModule.instrument(),
   ],
   bootstrap: [AppComponent]
 })

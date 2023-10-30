@@ -1,0 +1,46 @@
+<p>Scheduler works</p>
+<p>Scheduler works</p>
+<p>Scheduler works</p>
+
+<div class="todo-app">
+  <div class="input-section">
+    <input
+      id="todoInput"
+      type="text"
+      placeholder="Add item..."
+      [(ngModel)]="todo"
+      name="newTodo"
+    />
+    <button id="addBtn" class="add" (click)="addTodo()">Add</button>
+    <button type="button" class="add" id="update-button" style="display: none">
+      Update
+    </button>
+    <input
+      type="text"
+      id="search-input"
+      placeholder="Search"
+      (input)="searchTodos($event)"
+    />
+  </div>
+  <div class="todos">
+    <ul class="todo-list">
+      <li class="li" *ngFor="let todo of allTodos$ | async">
+        <input class="todo-checkbox" type="checkbox" value="option1" />
+
+        <div class="todo-content">
+          <input class="todo-text" [value]="todo.content"/>
+        </div>
+
+        <div class="todo-action">
+          <button class="span-button" (click)="removeTodo(todo)">
+            <ion-icon name="trash-outline"></ion-icon>
+          </button>
+          <button class="span-button" (click)="updateTodo($event)" [id]="todo.id">
+            <ion-icon name="create-outline"></ion-icon>
+          </button>
+        </div>
+      </li>
+    </ul>
+    <app-loading *ngIf="(todoStatus$ | async) === 'loading'"></app-loading>
+  </div>
+</div>
