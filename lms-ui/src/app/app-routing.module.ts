@@ -66,6 +66,14 @@ const routes: Routes = [
           import('./modules/schedulers/scheduler.component').then(
             (m) => m.SchedulerComponent
           ),
+  },
+
+  {
+    path: 'trellos',
+    loadComponent: () =>
+          import('./modules/trellos/trello.component').then(
+            (m) => m.TrelloComponent
+          ),
   }
 ];
 
