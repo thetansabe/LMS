@@ -90,6 +90,18 @@ on(updateTodo, (state, { id, newContent }) => ({
 }))
 ```
 
+## Trello:
+- Go to src > app > modules > trellos > trello.component
+- Drag and drop:
+  - dragStart: get the DragEvent when you start to drag.
+  - dragable: browser draggable effect.
+  - dragOver: get the event when you are dragging.
+  - drop: get the event when you drop.
+- The idea of trello is to know destination and update the board structure:
+  - Board structure: list of columns, each columns has list of tickets
+  - Destination#1 - empty column: just push the current dragging ticket into the destinate column.
+  - Destination#2 - column with existed tickets: detect nearest ticket using center collision detection and insert the dragging ticket.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
